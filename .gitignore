@@ -2,3 +2,5 @@ api-server/obj
 api-server/bin
 realtime-server/obj
 realtime-server/bin
+Shared/obj
+Shared/bin

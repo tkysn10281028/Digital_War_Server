@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api-server", "api-server\ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "realtime-server", "realtime-server\realtime-server.csproj", "{00D7A481-061C-41A8-9D0A-A2803BAC87CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{4C1903E7-43FF-4F60-849C-2D44FE8B127E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{00D7A481-061C-41A8-9D0A-A2803BAC87CD}.Release|x64.Build.0 = Release|Any CPU
 		{00D7A481-061C-41A8-9D0A-A2803BAC87CD}.Release|x86.ActiveCfg = Release|Any CPU
 		{00D7A481-061C-41A8-9D0A-A2803BAC87CD}.Release|x86.Build.0 = Release|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Debug|x64.Build.0 = Debug|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Debug|x86.Build.0 = Debug|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Release|x64.ActiveCfg = Release|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Release|x64.Build.0 = Release|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C1903E7-43FF-4F60-849C-2D44FE8B127E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
