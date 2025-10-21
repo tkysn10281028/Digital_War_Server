@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace api_server.Project.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class HealthController(AppDbContext context) : ControllerBase
     {
         private readonly AppDbContext _context = context;
