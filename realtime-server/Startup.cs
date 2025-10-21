@@ -23,7 +23,6 @@ namespace RealtimeServer
 
             app.UseEndpoints(endpoints =>
             {
-                // MagicOnionサービスのエンドポイント
                 endpoints.MapMagicOnionService();
             });
         }

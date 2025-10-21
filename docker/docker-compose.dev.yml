@@ -37,16 +37,16 @@ services:
   # ==============================
   # MagicOnionサーバー (リアルタイム通信)
   # ==============================
-  # realtime-server:
-  #   build:
-  #     context: ../
-  #     dockerfile: ./docker/Dockerfiles/realtime-server.Dockerfile
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #   networks:
-  #     - app-net
-  #   deploy:
-  #     replicas: 2
+  realtime-server:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfiles/realtime-server.Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - app-net
+    deploy:
+      replicas: 2
 
   # ==============================
   # 日次バッチ (S3アップロード用)

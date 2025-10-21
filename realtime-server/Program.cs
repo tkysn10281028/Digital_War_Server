@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace RealtimeServer
 {
@@ -14,9 +15,14 @@ namespace RealtimeServer
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseKestrel()
-                              .UseStartup<Startup>()
-                              .UseUrls("http://0.0.0.0:5001");
+                    webBuilder.ConfigureKestrel(options =>
+                    {
+                        options.ListenAnyIP(5001, listenOptions =>
+                        {
+                            listenOptions.Protocols = HttpProtocols.Http2;
+                        });
+                    });
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }
