@@ -3,15 +3,25 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddEnvironmentVariables();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-    c.AddServer(new OpenApiServer
+    if (builder.Environment.IsEnvironment("Docker"))
     {
-        Url = "/api"
-    });
+        c.AddServer(new OpenApiServer { Url = "/api" });
+    }
+    else if (builder.Environment.IsDevelopment())
+    {
+        c.AddServer(new OpenApiServer { Url = "/" });
+    }
 });
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -19,8 +29,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Docker"))
 {
     app.UseSwagger();
     app.UseSwaggerUI();
