@@ -7,7 +7,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        using var channel = GrpcChannel.ForAddress("http://localhost:5001");
+        using var channel = GrpcChannel.ForAddress(args.Length > 0 ? "http://localhost:8080" : "http://localhost:5001");
 
         // IChatService
         var response = await PrepareMagicOnionClient<IChatService>(channel).SendMessageAsync("Alice", "message");
