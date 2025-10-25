@@ -6,7 +6,7 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        var address = args.Length > 0 ? "http://localhost:8081" : "http://localhost:5001";
+        var address = args.Length > 0 && args[0] == "realtime" ? "http://localhost:8081" : "http://localhost:5001";
         var p = new Program();
         await p.RunAsync(address);
     }
