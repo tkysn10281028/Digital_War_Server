@@ -1,8 +1,2 @@
-api-server/obj
-api-server/bin
-realtime-server/obj
-realtime-server/bin
-Shared/obj
-Shared/bin
-realtime-client-test/*/obj
-realtime-client-test/*/bin
+**/bin/
+**/obj/
