@@ -1,5 +1,6 @@
 ﻿using Grpc.Net.Client;
 using MagicOnion.Client;
+using Shared.Dtos;
 using Shared.IFs;
 
 public class Program
@@ -26,10 +27,13 @@ public class Program
                 if (msg == null) break;
                 if (msg.Equals("/quit", StringComparison.OrdinalIgnoreCase))
                 {
-                    await client.LeaveGroupAsync(userId);
+                    await client.LeaveGroupAsync();
                     break;
                 }
-                await client.SendMessageAsync(msg);
+                await client.SendMessageAsync(new ChatMessage
+                {
+                    Message = msg
+                });
             }
         });
         await inputLoop;

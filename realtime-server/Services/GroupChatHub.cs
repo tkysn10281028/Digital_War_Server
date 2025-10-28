@@ -1,5 +1,6 @@
 
 using MagicOnion.Server.Hubs;
+using Shared.Dtos;
 using Shared.IFs;
 
 namespace Services
@@ -15,18 +16,31 @@ namespace Services
             currentUserId = userId;
             currentGroupId = groupId;
             group = await Group.AddAsync(groupId);
-            group.Except([Context.ContextId]).OnGroupUpdated(currentGroupId, userId, "joined");
+
+            group.Except([Context.ContextId]).OnGroupUpdated(new ChatMessage
+            {
+                UserId = currentUserId,
+                GroupId = groupId,
+                Message = "joined"
+            });
         }
 
-        public async Task LeaveGroupAsync(string userId)
+        public async Task LeaveGroupAsync()
         {
             await group!.RemoveAsync(Context);
-            group.Except([Context.ContextId]).OnGroupUpdated(currentGroupId, userId, "left");
+            group.Except([Context.ContextId]).OnGroupUpdated(new ChatMessage
+            {
+                UserId = currentUserId,
+                GroupId = currentGroupId,
+                Message = "left"
+            });
         }
 
-        public async Task SendMessageAsync(string message)
+        public async Task SendMessageAsync(ChatMessage chatMessage)
         {
-            group!.Except([Context.ContextId]).OnMessageReceived(currentGroupId, currentUserId, message);
+            chatMessage.UserId = currentUserId;
+            chatMessage.GroupId = currentGroupId;
+            group!.Except([Context.ContextId]).OnMessageReceived(chatMessage);
         }
     }
 }

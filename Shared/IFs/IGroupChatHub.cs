@@ -1,17 +1,18 @@
 using MagicOnion;
+using Shared.Dtos;
 
 namespace Shared.IFs
 {
     public interface IGroupChatHub : IStreamingHub<IGroupChatHub, IGroupChatHubReceiver>
     {
         Task JoinGroupAsync(string userId, string groupId);
-        Task LeaveGroupAsync(string userId);
-        Task SendMessageAsync(string message);
+        Task LeaveGroupAsync();
+        Task SendMessageAsync(ChatMessage chatMessage);
     }
 
     public interface IGroupChatHubReceiver
     {
-        void OnMessageReceived(string groupId, string userId, string message);
-        void OnGroupUpdated(string groupId, string userId, string message);
+        void OnMessageReceived(ChatMessage chatMessage);
+        void OnGroupUpdated(ChatMessage chatMessage);
     }
 }
