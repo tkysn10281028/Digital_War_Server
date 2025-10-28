@@ -1,4 +1,5 @@
 using api_server;
+using api_server.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -27,6 +28,8 @@ builder.Services.AddSwaggerGen(c =>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddSingleton<S3Service>();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Docker"))

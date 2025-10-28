@@ -53,9 +53,13 @@ services:
     ports:
       - "9000:9000"  # S3互換API
       - "9001:9001"  # 管理コンソール
+    volumes:
+      - minio_data:/data    
     networks:
       - app-net
 
 networks:
   app-net:
     driver: bridge
+volumes:
+  minio_data:
