@@ -3,7 +3,7 @@ using MagicOnion.Server.Hubs;
 using Shared.Dtos;
 using Shared.IFs;
 
-namespace Services
+namespace RealtimeServer.Services
 {
     public class GroupChatHub : StreamingHubBase<IGroupChatHub, IGroupChatHubReceiver>, IGroupChatHub
     {

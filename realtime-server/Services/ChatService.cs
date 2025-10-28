@@ -2,7 +2,7 @@ using MagicOnion;
 using MagicOnion.Server;
 using Shared.IFs;
 
-namespace Services
+namespace RealtimeServer.Services
 {
     public class ChatService : ServiceBase<IChatService>, IChatService
     {

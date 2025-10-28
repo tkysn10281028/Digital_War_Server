@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace api_server.Project.Models
+namespace ApiServer.Project.Models
 {
     public class Test
     {

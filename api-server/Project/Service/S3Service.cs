@@ -1,7 +1,7 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 
-namespace api_server.Services
+namespace ApiServer.Project.Services
 {
     public class S3Service
     {

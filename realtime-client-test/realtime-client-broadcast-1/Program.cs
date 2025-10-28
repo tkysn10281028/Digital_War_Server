@@ -1,42 +1,46 @@
 ﻿using Grpc.Net.Client;
 using MagicOnion.Client;
+using RealtimeClientTest.RealtimeClientBroadcast.Services;
 using Shared.Dtos;
 using Shared.IFs;
 
-public class Program
+namespace RealtimeClientTest.RealtimeClientBroadcast
 {
-    public static async Task Main(string[] args)
+    public class Program
     {
-        var address = args.Length > 0 && args[0] == "realtime" ? "http://localhost:8081" : "http://localhost:5001";
-        var p = new Program();
-        await p.RunAsync(address);
-    }
-    public async Task RunAsync(string address)
-    {
-        var userId = Guid.NewGuid().ToString();
-        Console.WriteLine("Your User ID: " + userId);
-        using var channel = GrpcChannel.ForAddress(address);
-        var receiver = new GroupChatHubReceiver();
-        var client = await StreamingHubClient.ConnectAsync<IGroupChatHub, IGroupChatHubReceiver>(channel, receiver);
-        await client.JoinGroupAsync(userId, "00000001");
-        var inputLoop = Task.Run(async () =>
+        public static async Task Main(string[] args)
         {
-            while (true)
+            var address = args.Length > 0 && args[0] == "realtime" ? "http://localhost:8081" : "http://localhost:5001";
+            var p = new Program();
+            await p.RunAsync(address);
+        }
+        public async Task RunAsync(string address)
+        {
+            var userId = Guid.NewGuid().ToString();
+            Console.WriteLine("Your User ID: " + userId);
+            using var channel = GrpcChannel.ForAddress(address);
+            var receiver = new GroupChatHubReceiver();
+            var client = await StreamingHubClient.ConnectAsync<IGroupChatHub, IGroupChatHubReceiver>(channel, receiver);
+            await client.JoinGroupAsync(userId, "00000001");
+            var inputLoop = Task.Run(async () =>
             {
-                var msg = Console.ReadLine();
-                if (msg == null) break;
-                if (msg.Equals("/quit", StringComparison.OrdinalIgnoreCase))
+                while (true)
                 {
-                    await client.LeaveGroupAsync();
-                    break;
+                    var msg = Console.ReadLine();
+                    if (msg == null) break;
+                    if (msg.Equals("/quit", StringComparison.OrdinalIgnoreCase))
+                    {
+                        await client.LeaveGroupAsync();
+                        break;
+                    }
+                    await client.SendMessageAsync(new ChatMessage
+                    {
+                        Message = msg
+                    });
                 }
-                await client.SendMessageAsync(new ChatMessage
-                {
-                    Message = msg
-                });
-            }
-        });
-        await inputLoop;
-        await client.DisposeAsync();
+            });
+            await inputLoop;
+            await client.DisposeAsync();
+        }
     }
 }

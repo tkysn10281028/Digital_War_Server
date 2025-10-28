@@ -1,5 +1,5 @@
-using api_server;
-using api_server.Services;
+using ApiServer;
+using ApiServer.Project.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 

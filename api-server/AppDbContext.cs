@@ -1,7 +1,7 @@
-using api_server.Project.Models;
+using ApiServer.Project.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace api_server
+namespace ApiServer
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
