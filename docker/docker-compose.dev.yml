@@ -36,8 +36,8 @@ services:
   # ==============================
   api-server:
     build:
-      context: ../api-server
-      dockerfile: ../docker/Dockerfiles/api-server.Dockerfile
+      context: ../
+      dockerfile: ./docker/Dockerfiles/api-server.Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - Redis__Host=redis

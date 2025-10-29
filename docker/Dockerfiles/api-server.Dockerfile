@@ -1,17 +1,22 @@
 # ==============ビルドステージ=============
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+
 WORKDIR /src
 
-COPY *.csproj ./
-RUN dotnet restore
+COPY ./Shared/*.csproj ./Shared/
+COPY ./api-server/*.csproj ./api-server/
+RUN dotnet restore ./api-server/api-server.csproj
 
-COPY . ./
+COPY ./Shared ./Shared
+COPY ./api-server ./api-server
+WORKDIR /src/api-server
 RUN dotnet publish -c Release -o /app/publish
 
 # ==============実行ステージ=============
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+
 WORKDIR /app
-COPY --from=build /app/publish ./
+COPY --from=build /app/publish .
 
 ENV ASPNETCORE_URLS=http://+:80
 EXPOSE 80

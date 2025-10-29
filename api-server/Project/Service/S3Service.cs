@@ -36,9 +36,9 @@ namespace ApiServer.Project.Services
             _s3 = new AmazonS3Client(accessKey, secretKey, s3Config);
         }
 
-        public async Task<List<string>> GetFileListAsync()
+        public async Task<List<string>> GetMapNameListAsync(string groupId)
         {
-            var result = await GetAllFileListAsync();
+            var result = await GetAllMapNameListAsync();
             var output = new List<string>();
             foreach (var word in _targetWordList)
             {
@@ -47,7 +47,7 @@ namespace ApiServer.Project.Services
             }
             return output;
         }
-        private async Task<List<string>> GetAllFileListAsync()
+        private async Task<List<string>> GetAllMapNameListAsync()
         {
             var files = new List<string>();
             var request = new ListObjectsV2Request
