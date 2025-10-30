@@ -1,9 +1,10 @@
 using Amazon.S3;
 using Amazon.S3.Model;
+using ApiServer.Project.Base;
 
 namespace ApiServer.Project.Services
 {
-    public class S3Service
+    public class S3Service : ApiServerServiceBase
     {
         private readonly AmazonS3Client _s3;
         private readonly string _bucketName;
@@ -20,7 +21,7 @@ namespace ApiServer.Project.Services
             "map_up_border",
         ];
 
-        public S3Service(IConfiguration config)
+        public S3Service(AppDbContext db, IConfiguration config) : base(db)
         {
             var serviceUrl = config["S3:ServiceUrl"];
             var accessKey = config["S3:AccessKey"];
@@ -38,15 +39,10 @@ namespace ApiServer.Project.Services
 
         public async Task<List<string>> GetMapNameListAsync(string groupId)
         {
-            var result = await GetAllMapNameListAsync();
-            var output = new List<string>();
-            foreach (var word in _targetWordList)
-            {
-                var fileNames = result.Where(r => r.Contains(word)).ToList();
-                output.Add(fileNames[new Random().Next(fileNames.Count)]);
-            }
-            return output;
+            var allMapNameList = await GetAllMapNameListAsync();
+            return GetRandomMapNameList(allMapNameList);
         }
+
         private async Task<List<string>> GetAllMapNameListAsync()
         {
             var files = new List<string>();
@@ -70,6 +66,17 @@ namespace ApiServer.Project.Services
             while (response.IsTruncated == true);
 
             return files;
+        }
+
+        private List<string> GetRandomMapNameList(List<string> list)
+        {
+            var output = new List<string>();
+            foreach (var word in _targetWordList)
+            {
+                var fileNames = list.Where(r => r.Contains(word)).ToList();
+                output.Add(fileNames[new Random().Next(fileNames.Count)]);
+            }
+            return output;
         }
     }
 }
