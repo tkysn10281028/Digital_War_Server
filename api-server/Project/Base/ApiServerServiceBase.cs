@@ -1,8 +1,14 @@
 namespace ApiServer.Project.Base
 {
-    public abstract class ApiServerServiceBase(AppDbContext db)
+    public abstract class ApiServerServiceBase
     {
-        protected readonly AppDbContext _db = db;
+        protected readonly AppDbContext _db;
+
+        public ApiServerServiceBase(AppDbContext db)
+        {
+            _db = db;
+        }
+
         protected async Task<TResult> ExecuteValidationAsync<TResult>(Func<Task<TResult>> action)
         {
             try

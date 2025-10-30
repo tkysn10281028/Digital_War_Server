@@ -6,9 +6,13 @@ namespace ApiServer.Project.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class HealthController(AppDbContext context) : ControllerBase
+    public class HealthController : ControllerBase
     {
-        private readonly AppDbContext _context = context;
+        private readonly AppDbContext _context;
+        public HealthController(AppDbContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet("status")]
         public IActionResult GetHealthStatus()

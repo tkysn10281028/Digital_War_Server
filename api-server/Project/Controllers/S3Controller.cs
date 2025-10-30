@@ -7,9 +7,13 @@ namespace ApiServer.Project.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class S3Controller(S3Service s3Service) : ApiServerControllerBase<S3GetMapNameList, S3GetMapNameList.Request, S3GetMapNameList.Response>
+    public class S3Controller : ApiServerControllerBase<S3GetMapNameList, S3GetMapNameList.Request, S3GetMapNameList.Response>
     {
-        private readonly S3Service _s3Service = s3Service;
+        private readonly S3Service _s3Service;
+        public S3Controller(S3Service s3Service)
+        {
+            _s3Service = s3Service;
+        }
 
         [HttpPost("getMapNameList")]
         public async Task<ActionResult<S3GetMapNameList.Response>> GetMapNameList([FromBody] S3GetMapNameList.Request request)

@@ -3,8 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiServer
 {
-    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+    public class AppDbContext : DbContext
     {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+
+        }
         public DbSet<Test> Tests { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
