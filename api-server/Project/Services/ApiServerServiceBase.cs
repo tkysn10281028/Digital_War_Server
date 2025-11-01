@@ -1,4 +1,6 @@
-namespace ApiServer.Project.Base
+using ApiServer.Project.Database;
+
+namespace ApiServer.Project.Services
 {
     public abstract class ApiServerServiceBase
     {

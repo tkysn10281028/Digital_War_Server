@@ -1,4 +1,4 @@
-namespace ApiServer.Project.Models
+namespace ApiServer.Project.Domains
 {
     public class Test
     {

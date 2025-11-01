@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared.ApiEndPoints;
 
-namespace ApiServer.Project.Base
+namespace ApiServer.Project.Controllers
 {
     [ApiController]
     public abstract class ApiServerControllerBase<TEndpoint, TRequest, TResponse> : ControllerBase

@@ -1,6 +1,6 @@
-using static ApiServer.AppDbContext;
+using static ApiServer.Project.Database.AppDbContext;
 
-namespace ApiServer.Project.Models
+namespace ApiServer.Project.Domains
 {
     public class UserGuild : BaseModel
     {

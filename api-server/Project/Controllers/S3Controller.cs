@@ -1,4 +1,3 @@
-using ApiServer.Project.Base;
 using ApiServer.Project.Services;
 using Microsoft.AspNetCore.Mvc;
 using Shared.ApiEndPoints;

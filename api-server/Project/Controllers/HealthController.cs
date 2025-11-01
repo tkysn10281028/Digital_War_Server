@@ -1,5 +1,5 @@
-using ApiServer;
-using ApiServer.Project.Models;
+using ApiServer.Project.Database;
+using ApiServer.Project.Domains;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiServer.Project.Controllers

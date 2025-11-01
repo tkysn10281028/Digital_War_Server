@@ -1,8 +1,7 @@
-using System.Security.Cryptography;
-using ApiServer.Project.Models;
+using ApiServer.Project.Domains;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApiServer
+namespace ApiServer.Project.Database
 {
     public class AppDbContext : DbContext
     {
