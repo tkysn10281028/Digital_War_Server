@@ -1,14 +1,21 @@
+using System.Linq;
 using Amazon.S3;
 using Amazon.S3.Model;
 using ApiServer.Project.Common;
 using ApiServer.Project.Database;
+using ApiServer.Project.Externals;
 
 namespace ApiServer.Project.Services
 {
     public class S3Service : IInjectable
     {
-        private readonly AmazonS3Client _s3;
-        private readonly string _bucketName;
+        private ApiServerAmazonS3Client _s3Client;
+
+        public S3Service(ApiServerAmazonS3Client s3Client)
+        {
+            _s3Client = s3Client;
+        }
+
         private readonly List<string> _targetWordList =
         [
             "map_down_border",
@@ -22,50 +29,10 @@ namespace ApiServer.Project.Services
             "map_up_border",
         ];
 
-        public S3Service(IConfiguration config)
-        {
-            var serviceUrl = config["S3:ServiceUrl"];
-            var accessKey = config["S3:AccessKey"];
-            var secretKey = config["S3:SecretKey"];
-            _bucketName = config["S3:BucketName"] ?? "";
-
-            var s3Config = new AmazonS3Config
-            {
-                ServiceURL = serviceUrl,
-                ForcePathStyle = true // MinIO互換
-            };
-            _s3 = new AmazonS3Client(accessKey, secretKey, s3Config);
-        }
-
         public async Task<List<string>> GetMapNameListAsync(string groupId)
         {
-            var allMapNameList = await GetAllMapNameListAsync();
+            var allMapNameList = await _s3Client.GetFileNameList();
             return GetRandomMapNameList(allMapNameList);
-        }
-
-        private async Task<List<string>> GetAllMapNameListAsync()
-        {
-            var files = new List<string>();
-            var request = new ListObjectsV2Request
-            {
-                BucketName = _bucketName
-            };
-
-            ListObjectsV2Response response;
-            do
-            {
-                response = await _s3.ListObjectsV2Async(request);
-
-                foreach (var obj in response.S3Objects)
-                {
-                    files.Add(obj.Key);
-                }
-
-                request.ContinuationToken = response.NextContinuationToken;
-            }
-            while (response.IsTruncated == true);
-
-            return files;
         }
 
         private List<string> GetRandomMapNameList(List<string> list)
@@ -74,7 +41,10 @@ namespace ApiServer.Project.Services
             foreach (var word in _targetWordList)
             {
                 var fileNames = list.Where(r => r.Contains(word)).ToList();
-                output.Add(fileNames[new Random().Next(fileNames.Count)]);
+                if (fileNames.Count != 0)
+                {
+                    output.Add(fileNames[new Random().Next(fileNames.Count)]);
+                }
             }
             return output;
         }
