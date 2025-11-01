@@ -54,11 +54,13 @@ namespace ApiServer.Project.Database
 
         public override int SaveChanges()
         {
+            UpdateTimestamps();
             return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            UpdateTimestamps();
             return base.SaveChangesAsync(cancellationToken);
         }
 
