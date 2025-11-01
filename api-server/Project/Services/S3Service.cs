@@ -3,6 +3,8 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using ApiServer.Project.Common;
 using ApiServer.Project.Database;
+using ApiServer.Project.Domains;
+using ApiServer.Project.Domains.Logics;
 using ApiServer.Project.Externals;
 
 namespace ApiServer.Project.Services
@@ -10,10 +12,12 @@ namespace ApiServer.Project.Services
     public class S3Service : IInjectable
     {
         private ApiServerAmazonS3Client _s3Client;
+        private UserGuildLogic _userGuildLogic;
 
-        public S3Service(ApiServerAmazonS3Client s3Client)
+        public S3Service(ApiServerAmazonS3Client s3Client, UserGuildLogic userGuildLogic)
         {
             _s3Client = s3Client;
+            _userGuildLogic = userGuildLogic;
         }
 
         private readonly List<string> _targetWordList =
@@ -29,7 +33,7 @@ namespace ApiServer.Project.Services
             "map_up_border",
         ];
 
-        public async Task<List<string>> GetMapNameListAsync(string groupId)
+        public async Task<List<string>> GetMapNameListAsync(long userId, long groupId)
         {
             var allMapNameList = await _s3Client.GetFileNameList();
             return GetRandomMapNameList(allMapNameList);

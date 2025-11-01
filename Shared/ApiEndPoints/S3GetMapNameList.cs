@@ -5,7 +5,8 @@ namespace Shared.ApiEndPoints
         public override string Path => "S3/getMapNameList";
         public class Request
         {
-            public string GroupId { get; set; } = string.Empty;
+            public long GroupId { get; set; }
+            public long UserId { get; set; }
         }
 
         public class Response

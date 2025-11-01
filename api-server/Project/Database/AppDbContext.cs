@@ -13,6 +13,7 @@ namespace ApiServer.Project.Database
         public DbSet<UserGuild> UserGuilds { get; set; }
         public DbSet<UserGuildMaster> UserGuildMasters { get; set; }
         public DbSet<UserLogin> UserLogins { get; set; }
+        public DbSet<UserMap> UserMaps { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +50,11 @@ namespace ApiServer.Project.Database
             modelBuilder.Entity<UserLogin>(entity =>
             {
                 entity.HasKey(e => e.UserId);
+            });
+
+            modelBuilder.Entity<UserMap>(entity =>
+            {
+                entity.HasKey(e => e.GuildId);
             });
         }
 

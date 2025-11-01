@@ -21,9 +21,9 @@ namespace ApiServer.Project.Controllers
         }
         protected override async Task<S3GetMapNameList.Response> HandleCoreAsync(S3GetMapNameList.Request request)
         {
-            if (string.IsNullOrEmpty(request.GroupId))
-                throw new ArgumentException("Group Id Is Required.");
-            var files = await _s3Service.GetMapNameListAsync(request.GroupId);
+            if (request.GroupId == 0 || request.UserId == 0)
+                throw new ArgumentException("Id Is Required.");
+            var files = await _s3Service.GetMapNameListAsync(request.UserId, request.GroupId);
             return new S3GetMapNameList.Response { MapNameList = files };
         }
     }
