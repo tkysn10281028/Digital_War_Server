@@ -1,6 +1,8 @@
+using ApiServer.Project.Common;
+
 namespace ApiServer.Project.Database.Daos
 {
-    public class UserDetailDao
+    public class UserDetailDao : IInjectable
     {
 
     }

@@ -1,10 +1,11 @@
 using Amazon.S3;
 using Amazon.S3.Model;
+using ApiServer.Project.Common;
 using ApiServer.Project.Database;
 
 namespace ApiServer.Project.Services
 {
-    public class S3Service : ApiServerServiceBase
+    public class S3Service : IInjectable
     {
         private readonly AmazonS3Client _s3;
         private readonly string _bucketName;
@@ -21,7 +22,7 @@ namespace ApiServer.Project.Services
             "map_up_border",
         ];
 
-        public S3Service(AppDbContext db, IConfiguration config) : base(db)
+        public S3Service(IConfiguration config)
         {
             var serviceUrl = config["S3:ServiceUrl"];
             var accessKey = config["S3:AccessKey"];
@@ -33,7 +34,6 @@ namespace ApiServer.Project.Services
                 ServiceURL = serviceUrl,
                 ForcePathStyle = true // MinIO互換
             };
-
             _s3 = new AmazonS3Client(accessKey, secretKey, s3Config);
         }
 

@@ -1,3 +1,5 @@
+using System.Reflection;
+using ApiServer.Project.Common;
 using ApiServer.Project.Database;
 using ApiServer.Project.Services;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +31,14 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-builder.Services.AddScoped<S3Service>();
+var assembly = Assembly.GetExecutingAssembly();
+var baseType = typeof(IInjectable);
+
+foreach (var type in assembly.GetTypes()
+         .Where(t => t.IsClass && !t.IsAbstract && baseType.IsAssignableFrom(t)))
+{
+    builder.Services.AddScoped(type);
+}
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Docker"))

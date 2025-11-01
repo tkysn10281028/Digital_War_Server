@@ -1,9 +1,10 @@
+using ApiServer.Project.Common;
 using ApiServer.Project.Domains;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiServer.Project.Database
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : DbContext, IInjectable
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<Test> Tests { get; set; }

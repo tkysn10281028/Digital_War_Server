@@ -1,6 +1,8 @@
+using ApiServer.Project.Common;
+
 namespace ApiServer.Project.Domains.Logics
 {
-    public class UserGuildLogic
+    public class UserGuildLogic : IInjectable
     {
 
     }
