@@ -6,5 +6,10 @@ namespace ApiServer.Project.Domains
     {
         public long UserId { get; set; }
         public string DeviceId { get; set; } = "";
+        public User(long userId, string deviceId)
+        {
+            UserId = userId;
+            DeviceId = deviceId;
+        }
     }
 }

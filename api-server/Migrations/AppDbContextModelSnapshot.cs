@@ -151,22 +151,18 @@ namespace api_server.Migrations
             modelBuilder.Entity("ApiServer.Project.Domains.UserMap", b =>
                 {
                     b.Property<long>("GuildId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("GuildId"));
+                    b.Property<string>("MapName")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<long>("CreatedAt")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("MapName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<long>("UpdatedAt")
                         .HasColumnType("bigint");
 
-                    b.HasKey("GuildId");
+                    b.HasKey("GuildId", "MapName");
 
                     b.ToTable("UserMaps");
                 });

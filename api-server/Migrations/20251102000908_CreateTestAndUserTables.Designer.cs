@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace api_server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251101102129_CreateUserTables")]
-    partial class CreateUserTables
+    [Migration("20251102000908_CreateTestAndUserTables")]
+    partial class CreateTestAndUserTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -149,6 +149,25 @@ namespace api_server.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("UserLogins");
+                });
+
+            modelBuilder.Entity("ApiServer.Project.Domains.UserMap", b =>
+                {
+                    b.Property<long>("GuildId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MapName")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UpdatedAt")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("GuildId", "MapName");
+
+                    b.ToTable("UserMaps");
                 });
 #pragma warning restore 612, 618
         }

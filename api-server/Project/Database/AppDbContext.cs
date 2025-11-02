@@ -54,7 +54,7 @@ namespace ApiServer.Project.Database
 
             modelBuilder.Entity<UserMap>(entity =>
             {
-                entity.HasKey(e => e.GuildId);
+                entity.HasKey(e => new { e.GuildId, e.MapName });
             });
         }
 

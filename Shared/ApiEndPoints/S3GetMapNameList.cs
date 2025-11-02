@@ -3,13 +3,12 @@ namespace Shared.ApiEndPoints
     public class S3GetMapNameList : EndPointBase<S3GetMapNameList.Request, S3GetMapNameList.Response>
     {
         public override string Path => "S3/getMapNameList";
-        public class Request
+        public class Request : RequestBase
         {
-            public long GroupId { get; set; }
-            public long UserId { get; set; }
+
         }
 
-        public class Response
+        public class Response : ResponseBase
         {
             public List<string> MapNameList { get; set; } = new();
         }

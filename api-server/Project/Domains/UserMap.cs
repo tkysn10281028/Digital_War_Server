@@ -6,5 +6,10 @@ namespace ApiServer.Project.Domains
     {
         public long GuildId { get; set; }
         public string MapName { get; set; } = string.Empty;
+        public UserMap(long guildId, string mapName)
+        {
+            GuildId = guildId;
+            MapName = mapName;
+        }
     }
 }

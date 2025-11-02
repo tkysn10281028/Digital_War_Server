@@ -9,10 +9,18 @@ namespace ApiServer.Project.Database.Daos
     {
         private AppDbContext _context;
         public UserMapDao(AppDbContext context) => _context = context;
-        public async Task<UserMap?> FindById(long guildId)
+        public async Task<List<UserMap>> FindByGuildId(long guildId)
         {
-            return await _context.UserMaps
-                .FirstOrDefaultAsync(u => u.GuildId == guildId);
+            return await _context.UserMaps.Where(u => u.GuildId == guildId).ToListAsync();
+        }
+
+        public async Task Insert(List<UserMap> userMapList)
+        {
+            foreach (var userMap in userMapList)
+            {
+                _context.UserMaps.Add(userMap);
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }

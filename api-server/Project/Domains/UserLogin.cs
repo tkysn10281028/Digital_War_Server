@@ -6,5 +6,10 @@ namespace ApiServer.Project.Domains
     {
         public long UserId { get; set; }
         public string ClientKey { get; set; } = "";
+        public UserLogin(long userId, string clientKey)
+        {
+            UserId = userId;
+            ClientKey = clientKey;
+        }
     }
 }

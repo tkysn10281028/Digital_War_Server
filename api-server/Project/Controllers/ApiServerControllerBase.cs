@@ -6,8 +6,8 @@ namespace ApiServer.Project.Controllers
     [ApiController]
     public abstract class ApiServerControllerBase<TEndpoint, TRequest, TResponse> : ControllerBase
         where TEndpoint : EndPointBase<TRequest, TResponse>, new()
-        where TRequest : class, new()
-        where TResponse : class, new()
+        where TRequest : RequestBase, new()
+        where TResponse : ResponseBase, new()
     {
         protected readonly TEndpoint _endpoint = new();
         protected abstract Task<TResponse> HandleCoreAsync(TRequest request);

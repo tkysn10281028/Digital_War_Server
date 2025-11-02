@@ -6,11 +6,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api_server.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateUserTables : Migration
+    public partial class CreateTestAndUserTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Tests",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tests", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "UserDetails",
                 columns: table => new
@@ -78,6 +95,22 @@ namespace api_server.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "UserMaps",
+                columns: table => new
+                {
+                    GuildId = table.Column<long>(type: "bigint", nullable: false),
+                    MapName = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<long>(type: "bigint", nullable: false),
+                    UpdatedAt = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserMaps", x => new { x.GuildId, x.MapName });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -99,6 +132,9 @@ namespace api_server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Tests");
+
+            migrationBuilder.DropTable(
                 name: "UserDetails");
 
             migrationBuilder.DropTable(
@@ -109,6 +145,9 @@ namespace api_server.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserLogins");
+
+            migrationBuilder.DropTable(
+                name: "UserMaps");
 
             migrationBuilder.DropTable(
                 name: "Users");

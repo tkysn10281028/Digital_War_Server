@@ -7,5 +7,11 @@ namespace ApiServer.Project.Domains
         public long UserId { get; set; }
         public string Name { get; set; } = "";
         public string ClientKey { get; set; } = "";
+        public UserDetail(long userId, string name, string clientKey)
+        {
+            UserId = userId;
+            Name = name;
+            ClientKey = clientKey;
+        }
     }
 }
