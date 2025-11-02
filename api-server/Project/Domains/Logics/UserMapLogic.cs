@@ -16,7 +16,7 @@ namespace ApiServer.Project.Domains.Logics
         {
             var userMapList = mapNameList.Select(u =>
             {
-                return new UserMap(guildId, u);
+                return new UserMap { GuildId = guildId, MapName = u };
             }).ToList();
             await _dao.Insert(userMapList);
         }

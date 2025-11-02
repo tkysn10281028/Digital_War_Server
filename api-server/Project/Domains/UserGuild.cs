@@ -6,10 +6,5 @@ namespace ApiServer.Project.Domains
     {
         public long UserId { get; set; }
         public long GuildId { get; set; }
-        public UserGuild(long userId, long guildId)
-        {
-            UserId = userId;
-            GuildId = guildId;
-        }
     }
 }

@@ -10,12 +10,14 @@ using Shared.ApiEndPoints;
 
 namespace ApiServer.Project.Services
 {
-    public class S3Service : IInjectable
+    public class S3Service : ApiServerBaseService<S3GetMapNameList.Request, S3GetMapNameList.Response>, IInjectable
     {
         private ApiServerAmazonS3Client _s3Client;
         private UserMapLogic _userMapLogic;
 
-        public S3Service(ApiServerAmazonS3Client s3Client, UserMapLogic userMapLogic)
+        public S3Service(
+            ApiServerAmazonS3Client s3Client, UserMapLogic userMapLogic, UserGuildLogic userGuildLogic
+        ) : base(userGuildLogic)
         {
             _s3Client = s3Client;
             _userMapLogic = userMapLogic;
@@ -34,17 +36,9 @@ namespace ApiServer.Project.Services
             "map_up_border",
         ];
 
-        public async Task<List<string>> GetMapNameListAsync(S3GetMapNameList.Request request)
+        public async Task<S3GetMapNameList.Response> GetMapNameListAsync(S3GetMapNameList.Request request)
         {
-            var userMapList = await _userMapLogic.FindByGuildId(request.GuildId);
-            if (userMapList.Count == 0)
-            {
-                var allMapNameList = await _s3Client.GetFileNameList();
-                var randomMapNameList = GetRandomMapNameList(allMapNameList);
-                await _userMapLogic.Insert(request.GuildId, randomMapNameList);
-                return randomMapNameList;
-            }
-            return userMapList.Select(u => u.MapName).ToList();
+            return await ExecuteAsync(request);
         }
 
         private List<string> GetRandomMapNameList(List<string> list)
@@ -59,6 +53,25 @@ namespace ApiServer.Project.Services
                 }
             }
             return output;
+        }
+
+        protected override async Task<S3GetMapNameList.Response> HandleCoreAsync(S3GetMapNameList.Request request)
+        {
+            var userMapList = await _userMapLogic.FindByGuildId(request.GuildId);
+            if (userMapList.Count == 0)
+            {
+                var allMapNameList = await _s3Client.GetFileNameList();
+                var randomMapNameList = GetRandomMapNameList(allMapNameList);
+                await _userMapLogic.Insert(request.GuildId, randomMapNameList);
+                return new S3GetMapNameList.Response
+                {
+                    MapNameList = randomMapNameList
+                };
+            }
+            return new S3GetMapNameList.Response
+            {
+                MapNameList = userMapList.Select(u => u.MapName).ToList()
+            };
         }
     }
 }
